@@ -21,7 +21,7 @@ public class MainMenu {
 
     @FXML
     private void startNewGame() throws IOException {
-        App.setRoot("secondary");
+        App.setRoot("gameScene1");
     }
 
     @FXML

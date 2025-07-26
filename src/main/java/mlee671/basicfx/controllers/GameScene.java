@@ -1,11 +1,13 @@
 package mlee671.basicfx.controllers;
 
-//import java.io.IOException;
+import java.io.IOException;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.shape.Circle;
-//import mlee671.basicfx.App;
+import mlee671.basicfx.App;
+import mlee671.basicfx.App;
 
 public class GameScene {
 
@@ -14,6 +16,8 @@ public class GameScene {
     //onKeyPressed="#onKeyPress"
     @FXML private Circle iconPlayer;
     @FXML private GridPane gridArea;
+    @FXML private Button btnMenu;
+    @FXML private Button btnExit;
     
     private int playerRow = 0;
     private int playerCol = 0;
@@ -36,7 +40,7 @@ public class GameScene {
                 System.out.println("Moving Up");
                 break;
             case S:
-                if (playerRow < gridArea.getRowCount() - 1) {
+                if (playerRow < 5) {
                     playerRow++;
                 }
                 System.out.println("Moving Down");
@@ -48,7 +52,7 @@ public class GameScene {
                 System.out.println("Moving Left");
                 break;
             case D:
-                if (playerCol < gridArea.getColumnCount() - 1) {
+                if (playerCol < 5) {
                     playerCol++;
                 }
                 System.out.println("Moving Right");
@@ -59,5 +63,17 @@ public class GameScene {
         // Move the player icon
         GridPane.setRowIndex(iconPlayer, playerRow);
         GridPane.setColumnIndex(iconPlayer, playerCol);
+    }
+
+    @FXML
+    private void menu() throws IOException {
+        App.setRoot("mainMenu");
+    }
+
+    @FXML
+    private void exit() {
+        // Logic to exit the application
+        System.out.println("Exit clicked");
+        System.exit(0);
     }
 }
