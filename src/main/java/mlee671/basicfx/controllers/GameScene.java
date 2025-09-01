@@ -7,7 +7,7 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.shape.Circle;
 import mlee671.basicfx.App;
-import mlee671.basicfx.App;
+//import mlee671.basicfx.App;
 
 public class GameScene {
 
