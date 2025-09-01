@@ -14,20 +14,20 @@ public class MainMenu {
     //   <Button fx:id="btnOptions" mnemonicParsing="false" onAction="#options" text="Options" />
     //   <Button fx:id="btnExit" mnemonicParsing="false" onAction="#exit" text="Exit" />
 
-    @FXML private Button btnStartNewGame;
-    @FXML private Button btnLoadGame;
+    @FXML private Button btnCollectGame;
+    @FXML private Button btnRpgGame;
     @FXML private Button btnOptions;
     @FXML private Button btnExit;
 
     @FXML
-    private void startNewGame() throws IOException {
+    private void onCollectGame() throws IOException {
         App.setRoot("gameScene1");
     }
 
     @FXML
-    private void loadGame() throws IOException {
+    private void onRpgGame() throws IOException {
         // Logic to load a game would go here
-        System.out.println("Load Game clicked");
+        App.setRoot("gameScene2");
     }
 
     @FXML
