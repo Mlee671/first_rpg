@@ -50,4 +50,8 @@ public class BaseCharacter {
         return id;
     }
 
+    public void setId(int numericValue) {
+        this.id = numericValue;
+    }
+
 }

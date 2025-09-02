@@ -10,10 +10,11 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
-import javafx.scene.layout.StackPane;
 import mlee671.basicfx.App;
 import mlee671.basicfx.characters.BaseCharacter;
 
@@ -28,10 +29,19 @@ public class Game2Controller extends ControllerSuper {
   @FXML private ImageView imgHero4;
   @FXML private ImageView imgHero5;
   @FXML private ImageView imgHero6;
+  @FXML private ImageView imgSel;
+  @FXML private Label lblName;
+  @FXML private Label lblHealth;
+  @FXML private Label lblSTR;
+  @FXML private Label lblAGI;
+  @FXML private Label lblWIS;
+  @FXML private Label lblID;
   private HashMap<Image, BaseCharacter> characterMap;
   private List<ImageView> heroViews;
   private Image tileSet;
   private int tileSize;
+  private boolean characterSelected;
+  private BaseCharacter selectedCharacter;
 
   @FXML
   private void initialize() {
@@ -39,7 +49,8 @@ public class Game2Controller extends ControllerSuper {
     tileSet = new Image(App.class.getResourceAsStream("images/tileset.png"));
     tileSize = 18;
     heroViews = List.of(imgHero1, imgHero2, imgHero3, imgHero4, imgHero5, imgHero6);
-    draw();
+    characterSelected = false;
+    onReroll();
   }
 
   // Handle reroll button click
@@ -53,10 +64,12 @@ public class Game2Controller extends ControllerSuper {
       characterMap.put(getTile(character.getImage()), character);
     }
     draw();
+    pane.setVisible(false);
   }
 
   // loop through character map and update hero views based on character id
   public void draw() {
+    heroViews.forEach(view -> view.setImage(null));
     getCharacterMap()
         .forEach(
             (image, character) -> {
@@ -87,7 +100,37 @@ public class Game2Controller extends ControllerSuper {
   }
 
   @FXML
-  private void onClick() {
-    // Logic for click event
+  private void onClickBackground(MouseEvent event) throws IOException {
+    if (characterSelected) {
+      characterSelected = false;
+      pane.setVisible(false);
+    }
+  }
+
+  @FXML
+  private void onClickCharacter(MouseEvent event) throws IOException {
+    if (!characterSelected) {
+      ImageView clickedImg = (ImageView) event.getSource();
+      selectedCharacter = characterMap.get(clickedImg.getImage());
+      characterSelected = true;
+      if (selectedCharacter != null) {
+        System.out.println("Character clicked: " + selectedCharacter.getName());
+        lblHealth.setText("Health: " + selectedCharacter.getHealth());
+        lblSTR.setText("Strength: " + selectedCharacter.getStr());
+        lblAGI.setText("Agility: " + selectedCharacter.getAgi());
+        lblWIS.setText("Wisdom: " + selectedCharacter.getWis());
+        lblID.setText("ID: " + selectedCharacter.getId());
+        imgSel.setImage(clickedImg.getImage());
+        pane.setVisible(true);
+      }
+    } else {
+      ImageView clickedImg = (ImageView) event.getSource();
+      if (clickedImg.getImage() != null) { 
+        BaseCharacter character = characterMap.get(clickedImg.getImage());
+        character.setId(selectedCharacter.getId());
+      }
+      selectedCharacter.setId(Character.getNumericValue(clickedImg.getId().charAt(7)));
+      draw();
+    }
   }
 }
