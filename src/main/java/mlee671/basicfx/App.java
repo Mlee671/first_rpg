@@ -24,7 +24,7 @@ public class App extends Application {
       SceneManager.loadScenes(type, fxmlLoader.load());
     }
     context = new GameState();
-    scene = new Scene(SceneManager.getScene(SceneManager.SceneType.MAINMENU));
+    scene = new Scene(SceneManager.getScene(SceneManager.SceneType.MAINMENU), 640, 480);
     stage.setScene(scene);
     stage.show();
   }
