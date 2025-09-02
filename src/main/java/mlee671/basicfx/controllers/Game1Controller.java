@@ -1,7 +1,10 @@
 package mlee671.basicfx.controllers;
 
 import java.io.IOException;
+
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
@@ -9,7 +12,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.shape.Circle;
 import mlee671.basicfx.App;
 
-public class GameScene {
+public class Game1Controller extends ControllerSuper {
 
     //<Circle fx:id="iconPlayer"
     //GridPane fx:id="gridArea"
@@ -137,8 +140,10 @@ public class GameScene {
     }
 
     @FXML
-    private void menu() throws IOException {
-        App.setRoot("mainMenu");
+    private void menu(ActionEvent event) throws IOException {
+    Button btn = (Button) event.getSource();
+    Scene scene = btn.getScene();
+    App.openScene(scene, "mainmenu");
     }
 
     @FXML
