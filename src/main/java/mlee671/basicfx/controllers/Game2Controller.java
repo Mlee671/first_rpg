@@ -15,6 +15,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.shape.Rectangle;
 import mlee671.basicfx.App;
 import mlee671.basicfx.characters.BaseCharacter;
+import mlee671.basicfx.characters.HeroCharacter;
 
 public class Game2Controller extends ControllerSuper {
 
@@ -52,7 +53,7 @@ public class Game2Controller extends ControllerSuper {
   @FXML
   private void initialize() {
     characterMap = new HashMap<>();
-    tileSet = new Image(App.class.getResourceAsStream("images/tileset.png"));
+    tileSet = new Image(App.class.getResourceAsStream("images/herotileset.png"));
     tileSize = 18;
     heroViews = List.of(imgHero1, imgHero2, imgHero3, imgHero4, imgHero5, imgHero6);
     glowRects = List.of(recGlow1, recGlow2, recGlow3, recGlow4, recGlow5, recGlow6);
@@ -67,7 +68,7 @@ public class Game2Controller extends ControllerSuper {
   private void onReroll() {
     characterMap.clear();
     for (int i = 1; i <= 4; i++) {
-      BaseCharacter character = new BaseCharacter(i);
+      BaseCharacter character = new HeroCharacter(i);
       characterMap.put(getTile(character.getImage()), character);
     }
     draw();

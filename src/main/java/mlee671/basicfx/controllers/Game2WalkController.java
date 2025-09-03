@@ -68,7 +68,7 @@ public class Game2WalkController extends ControllerSuper {
 
   @FXML
   private void initialize() {
-    tileSet = new Image(App.class.getResourceAsStream("images/tileset.png"));
+    tileSet = new Image(App.class.getResourceAsStream("images/monstertileset.png"));
     tileSize = 18;
     step = 0;
     Views =
