@@ -1,11 +1,11 @@
 package mlee671.basicfx.controllers;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
@@ -60,11 +60,13 @@ public class Game2WalkController extends ControllerSuper {
   private List<ImageView> Views;
   private List<Rectangle> glowRects;
   private List<Rectangle> targetRects;
+  private List<BaseCharacter> init;
   private Image tileSet;
   private int tileSize;
   private boolean characterSelected;
   private BaseCharacter selectedCharacter;
   private int step;
+  private int initcount;
 
   @FXML
   private void initialize() {
@@ -117,7 +119,7 @@ public class Game2WalkController extends ControllerSuper {
   @FXML
   private void onClickBackground(MouseEvent event) throws IOException {
     if (characterSelected) {
-      glowRects.get(selectedCharacter.getId()-1).setVisible(false);
+      glowRects.get(selectedCharacter.getId() - 1).setVisible(false);
       characterSelected = false;
       pane.setVisible(false);
     }
@@ -131,11 +133,11 @@ public class Game2WalkController extends ControllerSuper {
 
     ImageView clickedImg = (ImageView) event.getSource();
     if (characterSelected && clickedImg.getImage() != null) {
-      glowRects.get(selectedCharacter.getId()-1).setVisible(false);
+      glowRects.get(selectedCharacter.getId() - 1).setVisible(false);
     }
     if (clickedImg.getImage() != null) {
       if (characterSelected) {
-      glowRects.get(selectedCharacter.getId()-1).setVisible(false);
+        glowRects.get(selectedCharacter.getId() - 1).setVisible(false);
       }
       selectedCharacter = characterMap.get(clickedImg.getImage());
       characterSelected = true;
@@ -147,19 +149,20 @@ public class Game2WalkController extends ControllerSuper {
       lblID.setText("ID: " + selectedCharacter.getId());
       imgSel.setImage(clickedImg.getImage());
       pane.setVisible(true);
-      glowRects.get(selectedCharacter.getId()-1).setVisible(true);
+      glowRects.get(selectedCharacter.getId() - 1).setVisible(true);
     }
   }
 
   @FXML
-  private void onClickAbility(MouseEvent event) throws IOException {
-  }
+  private void onClickAbility(MouseEvent event) throws IOException {}
 
   public void addStep() {
     step++;
   }
 
   public void startBattle() {
+    this.init = new ArrayList<>();
+    this.initcount = 0;
     int enemy = (int) (Math.random() * 6) + 1;
     Set<Integer> enemyId = new HashSet<>();
     while (enemyId.size() < enemy) {
@@ -170,6 +173,11 @@ public class Game2WalkController extends ControllerSuper {
         characterMap.put(getTile(character.getImage()), character);
       }
     }
+    getCharacterMap()
+        .forEach(
+            (image, character) -> {
+              init.add(character);
+            });
     draw();
   }
 
@@ -179,7 +187,69 @@ public class Game2WalkController extends ControllerSuper {
   }
 
   public void pulse() {
-    // TODO Auto-generated method stub
-    throw new UnsupportedOperationException("Unimplemented method 'pulse'");
+    if (initcount < init.size()) {
+      BaseCharacter character = init.get(initcount);
+      if (!character.isDead()) {
+        attack(character.getAttack(), character.getRole(), character.getId());
+      }
+      initcount++;
+      if (initcount >= init.size()) {
+        initcount = 0;
+      }
+    }
+  }
+
+  private void attack(int damage, String type, int id) {
+    BaseCharacter target = findTarget(id);
+    System.out.println(
+        type
+            + " "
+            + id
+            + " attacks "
+            + (target != null ? target.getRole() + " " + target.getId() : "no target")
+            + " for "
+            + damage
+            + " damage.");
+    if (target != null) {
+      target.takeDamage(damage);
+    } else {
+      System.out.println("No valid target found.");
+    }
+  }
+
+  private BaseCharacter findTarget(int id) {
+    BaseCharacter target = null;
+    BaseCharacter secondaryTarget = null;
+    for (BaseCharacter character : characterMap.values()) {
+      if (character.isDead()) {
+        continue;
+      }
+      if (id <= 6) {
+        if (character.getId() % 3 == id % 3 && character.getId() < 10) {
+          System.out.println("Target found: in first group");
+          return character;
+        } else if (6 < character.getId() && character.getId() < 10) {
+          target = character;
+        } else if (character.getId() >= 10) {
+          secondaryTarget = character;
+        }
+      } else {
+        if (character.getId() == id - 3 && character.getId() < 7) {
+          System.out.println("Target found: in first group");
+          return character;
+        } else if (character.getId() <= 3) {
+          target = character;
+        } else if (character.getId() <= 6 && character.getId() > 3) {
+          secondaryTarget = character;
+        }
+      }
+    }
+    if (target != null) {
+      System.out.println("Target found: in second group");
+      return target;
+    } else {
+      System.out.println("Target found: in third group");
+      return secondaryTarget;
+    }
   }
 }

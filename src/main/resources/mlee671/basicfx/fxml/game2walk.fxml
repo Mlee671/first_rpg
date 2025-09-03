@@ -28,18 +28,18 @@
       <ImageView fx:id="imgHero4" fitHeight="36.0" fitWidth="36.0" layoutX="150.0" layoutY="350.0" onMouseClicked="#onClickCharacter" pickOnBounds="true" preserveRatio="true" />
       <ImageView fx:id="imgHero5" fitHeight="36.0" fitWidth="36.0" layoutX="225.0" layoutY="350.0" onMouseClicked="#onClickCharacter" pickOnBounds="true" preserveRatio="true" />
       <ImageView fx:id="imgHero6" fitHeight="36.0" fitWidth="36.0" layoutX="300.0" layoutY="350.0" onMouseClicked="#onClickCharacter" pickOnBounds="true" preserveRatio="true" />
-      <Rectangle fx:id="recTarget1" arcHeight="5.0" arcWidth="5.0" fill="#ffffff33" height="40.0" layoutX="148.0" layoutY="95.0" stroke="BLACK" strokeType="INSIDE" visible="false" width="40.0" />
-      <Rectangle fx:id="recTarget2" arcHeight="5.0" arcWidth="5.0" fill="#ffffff33" height="40.0" layoutX="223.0" layoutY="95.0" stroke="BLACK" strokeType="INSIDE" visible="false" width="40.0" />
-      <Rectangle fx:id="recTarget3" arcHeight="5.0" arcWidth="5.0" fill="#ffffff33" height="40.0" layoutX="298.0" layoutY="95.0" stroke="BLACK" strokeType="INSIDE" visible="false" width="40.0" />
-      <Rectangle fx:id="recTarget4" arcHeight="5.0" arcWidth="5.0" fill="#ffffff33" height="40.0" layoutX="148.0" layoutY="148.0" stroke="BLACK" strokeType="INSIDE" visible="false" width="40.0" />
-      <Rectangle fx:id="recTarget5" arcHeight="5.0" arcWidth="5.0" fill="#ffffff33" height="40.0" layoutX="223.0" layoutY="148.0" stroke="BLACK" strokeType="INSIDE" visible="false" width="40.0" />
-      <Rectangle fx:id="recTarget6" arcHeight="5.0" arcWidth="5.0" fill="#ffffff33" height="40.0" layoutX="298.0" layoutY="148.0" stroke="BLACK" strokeType="INSIDE" visible="false" width="40.0" />
-      <ImageView fx:id="imgEnemy1" fitHeight="36.0" fitWidth="36.0" layoutX="150.0" layoutY="100.0" pickOnBounds="true" preserveRatio="true" />
-      <ImageView fx:id="imgEnemy2" fitHeight="36.0" fitWidth="36.0" layoutX="225.0" layoutY="100.0" pickOnBounds="true" preserveRatio="true" />
-      <ImageView fx:id="imgEnemy3" fitHeight="36.0" fitWidth="36.0" layoutX="300.0" layoutY="100.0" pickOnBounds="true" preserveRatio="true" />
-      <ImageView fx:id="imgEnemy4" fitHeight="36.0" fitWidth="36.0" layoutX="150.0" layoutY="150.0" pickOnBounds="true" preserveRatio="true" />
-      <ImageView fx:id="imgEnemy5" fitHeight="36.0" fitWidth="36.0" layoutX="225.0" layoutY="150.0" pickOnBounds="true" preserveRatio="true" />
-      <ImageView fx:id="imgEnemy6" fitHeight="36.0" fitWidth="36.0" layoutX="300.0" layoutY="150.0" pickOnBounds="true" preserveRatio="true" />
+      <Rectangle fx:id="recTarget4" arcHeight="5.0" arcWidth="5.0" fill="#ffffff33" height="40.0" layoutX="148.0" layoutY="95.0" stroke="BLACK" strokeType="INSIDE" visible="false" width="40.0" />
+      <Rectangle fx:id="recTarget5" arcHeight="5.0" arcWidth="5.0" fill="#ffffff33" height="40.0" layoutX="223.0" layoutY="95.0" stroke="BLACK" strokeType="INSIDE" visible="false" width="40.0" />
+      <Rectangle fx:id="recTarget6" arcHeight="5.0" arcWidth="5.0" fill="#ffffff33" height="40.0" layoutX="298.0" layoutY="95.0" stroke="BLACK" strokeType="INSIDE" visible="false" width="40.0" />
+      <Rectangle fx:id="recTarget1" arcHeight="5.0" arcWidth="5.0" fill="#ffffff33" height="40.0" layoutX="148.0" layoutY="148.0" stroke="BLACK" strokeType="INSIDE" visible="false" width="40.0" />
+      <Rectangle fx:id="recTarget2" arcHeight="5.0" arcWidth="5.0" fill="#ffffff33" height="40.0" layoutX="223.0" layoutY="148.0" stroke="BLACK" strokeType="INSIDE" visible="false" width="40.0" />
+      <Rectangle fx:id="recTarget3" arcHeight="5.0" arcWidth="5.0" fill="#ffffff33" height="40.0" layoutX="298.0" layoutY="148.0" stroke="BLACK" strokeType="INSIDE" visible="false" width="40.0" />
+      <ImageView fx:id="imgEnemy4" fitHeight="36.0" fitWidth="36.0" layoutX="150.0" layoutY="100.0" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="imgEnemy5" fitHeight="36.0" fitWidth="36.0" layoutX="225.0" layoutY="100.0" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="imgEnemy6" fitHeight="36.0" fitWidth="36.0" layoutX="300.0" layoutY="100.0" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="imgEnemy1" fitHeight="36.0" fitWidth="36.0" layoutX="150.0" layoutY="150.0" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="imgEnemy2" fitHeight="36.0" fitWidth="36.0" layoutX="225.0" layoutY="150.0" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="imgEnemy3" fitHeight="36.0" fitWidth="36.0" layoutX="300.0" layoutY="150.0" pickOnBounds="true" preserveRatio="true" />
       <Pane fx:id="pane" layoutX="440.0" prefHeight="422.0" prefWidth="200.0">
          <children>
             <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#fcfcfc" height="422.0" stroke="BLACK" strokeType="INSIDE" width="200.0" />

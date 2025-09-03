@@ -11,6 +11,7 @@ public class Game2Walk implements GameState {
     private Game2WalkController controller;
     private int count;
     private boolean walking = true;
+    private int delay = 20;
 
     public Game2Walk() {
         controller = (Game2WalkController) SceneManager.getController(SceneType.GAME2WALK);
@@ -40,12 +41,12 @@ public class Game2Walk implements GameState {
 
     @Override
     public void update() {
+        count++;
         if (walking) {
-            count++;
-            if (count > 10) {
+            if (count > delay) {
                 controller.addStep();
                 count = 0;
-                if (Math.random() < 0.05) {
+                if (Math.random() < 0.5) {
                     walking = false;
                     controller.startBattle();
                 } else if (Math.random() > 0.95) {
@@ -54,8 +55,9 @@ public class Game2Walk implements GameState {
                     //controller.startEvent();
                 }
             }
-        } else {
-            // controller.pulse();
+        } else if (count > delay) {
+            count = 0;
+            controller.pulse();
         }
         controller.draw();
     }

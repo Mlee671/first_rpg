@@ -10,21 +10,24 @@ public class BaseCharacter {
     protected String role;
     protected int[] image;
     protected int health;
+    protected int currentHealth;
     protected int str;
     protected int agi;
     protected int wis;
     protected int id;
+    private boolean isDead;
 
     public BaseCharacter(int id, String type){  
         this.id = id;
         this.image = new int[2];
         int[] mod = getModifiers(type);
-        System.out.println("Modifiers: " + mod[0] + ", " + mod[1] + ", " + mod[2] + ", " + mod[3]);
         this.str = (int)(Math.random()*10) + mod[1];
         this.agi = (int)(Math.random()*10) + mod[2];
         this.wis = (int)(Math.random()*10) + mod[3];
         this.health = (int) ((str + agi/2 + wis/5) * mod[0]/10);
         this.name = race + " " + role;
+        this.currentHealth = health;
+        this.isDead = false;
     }
 
     protected int[] getModifiers(String type) {
@@ -37,14 +40,12 @@ public class BaseCharacter {
             while ((line = reader.readLine()) != null) {
                 String[] parts = line.split(",");
                 if (lineNum == findRace) {
-                    System.out.println("Found race line: " + line);
                     this.race = (parts[0]);
                     image[1] = Integer.parseInt(parts[parts.length-1].trim());
                     for (int j = 1; j < parts.length-1; j++) {
                         mod[j-1] = Integer.parseInt(parts[j].trim());
                     }           
                 } else if (lineNum == findRole) {
-                    System.out.println("Found role line: " + line);
                     this.role = (parts[0]);
                     image[0] = Integer.parseInt(parts[parts.length-1].trim());
                     for (int j = 1; j < parts.length-1; j++) {
@@ -64,8 +65,8 @@ public class BaseCharacter {
         return name;
     }
 
-    public int getHealth() {
-        return health;
+    public String getHealth() {
+        return currentHealth + "/" + health;
     }
 
     public int getStr() {
@@ -90,6 +91,30 @@ public class BaseCharacter {
 
     public void setId(int numericValue) {
         this.id = numericValue;
+    }
+
+    public Integer getInit() {
+        return 30 - (agi + wis / 2);
+    }
+
+    public int getAttack() {
+        return str + agi / 2;
+    }
+
+    public String getRole() {
+        return role;
+    }
+
+    public void takeDamage(int damage) {
+        currentHealth -= damage;
+        if (currentHealth < 0) {
+            currentHealth = 0;
+            isDead = true;
+        }
+    }
+
+    public boolean isDead() {
+        return isDead;
     }
 
 }
