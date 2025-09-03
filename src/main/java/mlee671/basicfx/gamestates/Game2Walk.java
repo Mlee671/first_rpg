@@ -9,6 +9,8 @@ import mlee671.basicfx.controllers.SceneManager.SceneType;
 public class Game2Walk implements GameState {
 
     private Game2WalkController controller;
+    private int count;
+    private boolean walking = true;
 
     public Game2Walk() {
         controller = (Game2WalkController) SceneManager.getController(SceneType.GAME2WALK);
@@ -17,6 +19,7 @@ public class Game2Walk implements GameState {
     @Override
     public void enter() {
         controller.draw();
+        count = 0;
         App.startTimeline();
     }
 
@@ -37,6 +40,23 @@ public class Game2Walk implements GameState {
 
     @Override
     public void update() {
+        if (walking) {
+            count++;
+            if (count > 10) {
+                controller.addStep();
+                count = 0;
+                if (Math.random() < 0.05) {
+                    walking = false;
+                    controller.startBattle();
+                } else if (Math.random() > 0.95) {
+                    System.out.println("Event triggered!");
+                    ///walking = false;
+                    //controller.startEvent();
+                }
+            }
+        } else {
+            // controller.pulse();
+        }
         controller.draw();
     }
 }

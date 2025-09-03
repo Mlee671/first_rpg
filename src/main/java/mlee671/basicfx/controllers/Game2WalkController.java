@@ -2,7 +2,10 @@ package mlee671.basicfx.controllers;
 
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
+
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
@@ -15,11 +18,13 @@ import javafx.scene.layout.Pane;
 import javafx.scene.shape.Rectangle;
 import mlee671.basicfx.App;
 import mlee671.basicfx.characters.BaseCharacter;
+import mlee671.basicfx.characters.EnemyCharacter;
 
 public class Game2WalkController extends ControllerSuper {
 
   @FXML private Pane pane;
   @FXML private Button btnExit;
+  @FXML private Label lblStep;
   @FXML private ImageView imgHero1;
   @FXML private ImageView imgHero2;
   @FXML private ImageView imgHero3;
@@ -59,11 +64,13 @@ public class Game2WalkController extends ControllerSuper {
   private int tileSize;
   private boolean characterSelected;
   private BaseCharacter selectedCharacter;
+  private int step;
 
   @FXML
   private void initialize() {
     tileSet = new Image(App.class.getResourceAsStream("images/tileset.png"));
     tileSize = 18;
+    step = 0;
     Views =
         List.of(
             imgHero1, imgHero2, imgHero3, imgHero4, imgHero5, imgHero6, imgEnemy1, imgEnemy2,
@@ -76,6 +83,7 @@ public class Game2WalkController extends ControllerSuper {
   // loop through character map and update hero/enemy views based on character id
   public void draw() {
     Views.forEach(view -> view.setImage(null));
+    lblStep.setText("Step: " + step);
     getCharacterMap()
         .forEach(
             (image, character) -> {
@@ -145,5 +153,33 @@ public class Game2WalkController extends ControllerSuper {
 
   @FXML
   private void onClickAbility(MouseEvent event) throws IOException {
+  }
+
+  public void addStep() {
+    step++;
+  }
+
+  public void startBattle() {
+    int enemy = (int) (Math.random() * 6) + 1;
+    Set<Integer> enemyId = new HashSet<>();
+    while (enemyId.size() < enemy) {
+      int id = (int) (Math.random() * 6) + 7;
+      if (!enemyId.contains(id)) {
+        enemyId.add(id);
+        BaseCharacter character = new EnemyCharacter(id);
+        characterMap.put(getTile(character.getImage()), character);
+      }
+    }
+    draw();
+  }
+
+  public void startEvent() {
+    // TODO Auto-generated method stub
+    throw new UnsupportedOperationException("Unimplemented method 'startEvent'");
+  }
+
+  public void pulse() {
+    // TODO Auto-generated method stub
+    throw new UnsupportedOperationException("Unimplemented method 'pulse'");
   }
 }

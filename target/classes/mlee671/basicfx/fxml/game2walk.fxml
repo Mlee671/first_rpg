@@ -34,12 +34,12 @@
       <Rectangle fx:id="recTarget4" arcHeight="5.0" arcWidth="5.0" fill="#ffffff33" height="40.0" layoutX="148.0" layoutY="148.0" stroke="BLACK" strokeType="INSIDE" visible="false" width="40.0" />
       <Rectangle fx:id="recTarget5" arcHeight="5.0" arcWidth="5.0" fill="#ffffff33" height="40.0" layoutX="223.0" layoutY="148.0" stroke="BLACK" strokeType="INSIDE" visible="false" width="40.0" />
       <Rectangle fx:id="recTarget6" arcHeight="5.0" arcWidth="5.0" fill="#ffffff33" height="40.0" layoutX="298.0" layoutY="148.0" stroke="BLACK" strokeType="INSIDE" visible="false" width="40.0" />
-      <ImageView fx:id="imgEnemy1" fitHeight="36.0" fitWidth="36.0" layoutX="150.0" layoutY="100.0" onMouseClicked="#onClickCharacter" pickOnBounds="true" preserveRatio="true" />
-      <ImageView fx:id="imgEnemy2" fitHeight="36.0" fitWidth="36.0" layoutX="225.0" layoutY="100.0" onMouseClicked="#onClickCharacter" pickOnBounds="true" preserveRatio="true" />
-      <ImageView fx:id="imgEnemy3" fitHeight="36.0" fitWidth="36.0" layoutX="300.0" layoutY="100.0" onMouseClicked="#onClickCharacter" pickOnBounds="true" preserveRatio="true" />
-      <ImageView fx:id="imgEnemy4" fitHeight="36.0" fitWidth="36.0" layoutX="150.0" layoutY="150.0" onMouseClicked="#onClickCharacter" pickOnBounds="true" preserveRatio="true" />
-      <ImageView fx:id="imgEnemy5" fitHeight="36.0" fitWidth="36.0" layoutX="225.0" layoutY="150.0" onMouseClicked="#onClickCharacter" pickOnBounds="true" preserveRatio="true" />
-      <ImageView fx:id="imgEnemy6" fitHeight="36.0" fitWidth="36.0" layoutX="300.0" layoutY="150.0" onMouseClicked="#onClickCharacter" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="imgEnemy1" fitHeight="36.0" fitWidth="36.0" layoutX="150.0" layoutY="100.0" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="imgEnemy2" fitHeight="36.0" fitWidth="36.0" layoutX="225.0" layoutY="100.0" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="imgEnemy3" fitHeight="36.0" fitWidth="36.0" layoutX="300.0" layoutY="100.0" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="imgEnemy4" fitHeight="36.0" fitWidth="36.0" layoutX="150.0" layoutY="150.0" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="imgEnemy5" fitHeight="36.0" fitWidth="36.0" layoutX="225.0" layoutY="150.0" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="imgEnemy6" fitHeight="36.0" fitWidth="36.0" layoutX="300.0" layoutY="150.0" pickOnBounds="true" preserveRatio="true" />
       <Pane fx:id="pane" layoutX="440.0" prefHeight="422.0" prefWidth="200.0">
          <children>
             <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#fcfcfc" height="422.0" stroke="BLACK" strokeType="INSIDE" width="200.0" />
@@ -56,5 +56,6 @@
             <ImageView fx:id="imgSel" fitHeight="71.0" fitWidth="76.0" layoutX="124.0" pickOnBounds="true" preserveRatio="true" />
          </children>
       </Pane>
+      <Label fx:id="lblStep" layoutX="26.0" layoutY="29.0" prefHeight="17.0" prefWidth="76.0" text="0" textFill="RED" />
    </children>
 </Pane>

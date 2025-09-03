@@ -58,11 +58,4 @@ public class App extends Application {
     context.setCurrentScene(name);
     scene.setRoot(SceneManager.getScene(SceneManager.SceneType.valueOf(name.toUpperCase())));
   }
-
-  //   private static Parent loadFXML(String fxml) throws IOException {
-  //     FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("fxml/" + fxml + ".fxml"));
-  //     return fxmlLoader.load();
-  //   }
-
-  
 }
