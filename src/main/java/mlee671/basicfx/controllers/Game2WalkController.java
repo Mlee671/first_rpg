@@ -23,34 +23,14 @@ import mlee671.basicfx.characters.EnemyCharacter;
 
 public class Game2WalkController extends ControllerSuper {
 
-  @FXML private Pane pane;
   @FXML private Button btnExit;
   @FXML private Label lblStep;
-  @FXML private ImageView imgHero1;
-  @FXML private ImageView imgHero2;
-  @FXML private ImageView imgHero3;
-  @FXML private ImageView imgHero4;
-  @FXML private ImageView imgHero5;
-  @FXML private ImageView imgHero6;
   @FXML private ImageView imgEnemy1;
   @FXML private ImageView imgEnemy2;
   @FXML private ImageView imgEnemy3;
   @FXML private ImageView imgEnemy4;
   @FXML private ImageView imgEnemy5;
   @FXML private ImageView imgEnemy6;
-  @FXML private ImageView imgSel;
-  @FXML private Label lblName;
-  @FXML private Label lblHealth;
-  @FXML private Label lblSTR;
-  @FXML private Label lblAGI;
-  @FXML private Label lblWIS;
-  @FXML private Label lblID;
-  @FXML private Rectangle recGlow1;
-  @FXML private Rectangle recGlow2;
-  @FXML private Rectangle recGlow3;
-  @FXML private Rectangle recGlow4;
-  @FXML private Rectangle recGlow5;
-  @FXML private Rectangle recGlow6;
   @FXML private Rectangle recTarget1;
   @FXML private Rectangle recTarget2;
   @FXML private Rectangle recTarget3;
@@ -58,13 +38,10 @@ public class Game2WalkController extends ControllerSuper {
   @FXML private Rectangle recTarget5;
   @FXML private Rectangle recTarget6;
 
-  private List<ImageView> Views;
-  private List<Rectangle> glowRects;
   private List<BaseCharacter> init;
-  private boolean characterSelected;
-  private BaseCharacter selectedCharacter;
   private int step;
   private int initcount;
+  private Set<Integer> enemyId;
 
   @FXML
   private void initialize() {
@@ -90,22 +67,6 @@ public class Game2WalkController extends ControllerSuper {
     characterSelected = false;
   }
 
-  // loop through character map and update hero/enemy views based on character id
-  public void draw() {
-    Views.forEach(view -> view.setImage(null));
-    lblStep.setText("Step: " + step);
-    getCharacterMap()
-        .forEach(
-            (image, character) -> {
-              Views.get(character.getId() - 1).setImage(image);
-            });
-  }
-
-  // Get the character map
-  private HashMap<Image, BaseCharacter> getCharacterMap() {
-    return characterMap;
-  }
-
   // Handle menu button click
   @FXML
   private void onExit(ActionEvent event) throws IOException {
@@ -114,56 +75,29 @@ public class Game2WalkController extends ControllerSuper {
     App.openScene(scene, "mainmenu");
   }
 
-  // resets selected character when background is clicked
-  @FXML
-  private void onClickBackground(MouseEvent event) throws IOException {
-    if (characterSelected) {
-      glowRects.get(selectedCharacter.getId() - 1).setVisible(false);
-      characterSelected = false;
-      pane.setVisible(false);
-    }
-  }
-
-  // Handle character click events
-  // shows character information on click
-  // changes character position on click
-  @FXML
-  private void onClickCharacter(MouseEvent event) throws IOException {
-
-    ImageView clickedImg = (ImageView) event.getSource();
-    if (characterSelected && clickedImg.getImage() != null) {
-      glowRects.get(selectedCharacter.getId() - 1).setVisible(false);
-    }
-    if (clickedImg.getImage() != null) {
-      if (characterSelected) {
-        glowRects.get(selectedCharacter.getId() - 1).setVisible(false);
-      }
-      selectedCharacter = characterMap.get(clickedImg.getImage());
-      characterSelected = true;
-      lblName.setText(selectedCharacter.getName());
-      lblHealth.setText("Health: " + selectedCharacter.getHealth());
-      lblSTR.setText("Strength: " + selectedCharacter.getStr());
-      lblAGI.setText("Agility: " + selectedCharacter.getAgi());
-      lblWIS.setText("Wisdom: " + selectedCharacter.getWis());
-      lblID.setText("ID: " + selectedCharacter.getId());
-      imgSel.setImage(clickedImg.getImage());
-      pane.setVisible(true);
-      glowRects.get(selectedCharacter.getId() - 1).setVisible(true);
-    }
-  }
-
   @FXML
   private void onClickAbility(MouseEvent event) throws IOException {}
 
-  public void addStep() {
+  public void addStep(){
     step++;
+    lblStep.setText("Step: " + step);
+    if (step >= 100) {
+      Scene scene = pane.getScene();
+      try {
+        App.openScene(scene, "mainmenu");
+      } catch (IOException e) {
+        // TODO Auto-generated catch block
+        e.printStackTrace();
+      }
+    }
   }
 
   public void startBattle() {
     this.init = new ArrayList<>();
     this.initcount = 0;
+    inBattle = true;
     int enemy = (int) (Math.random() * 6) + 1;
-    Set<Integer> enemyId = new HashSet<>();
+    enemyId = new HashSet<>();
     while (enemyId.size() < enemy) {
       int id = (int) (Math.random() * 6) + 7;
       if (!enemyId.contains(id)) {
@@ -172,11 +106,13 @@ public class Game2WalkController extends ControllerSuper {
         characterMap.put(character.getImage(), character);
       }
     }
+    System.out.println("Enemies: " + enemyId);
     getCharacterMap()
         .forEach(
             (image, character) -> {
               init.add(character);
             });
+    System.out.println("Initial Characters: " + init);
     draw();
   }
 
@@ -206,12 +142,14 @@ public class Game2WalkController extends ControllerSuper {
       if (target.isDead()) {
         init.remove(target);
         characterMap.remove(target.getImage());
-        glowRects.get(id-1).setVisible(false);
         draw();
       }
       return false;
     } else {
       System.out.println("No valid target found.");
+      glowRects.get(id-1).setVisible(false);
+      inBattle = false;
+      draw();
       return true;
     }
   }

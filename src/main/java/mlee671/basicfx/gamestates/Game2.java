@@ -29,7 +29,7 @@ public class Game2 implements GameState {
     }
 
     @Override
-    public ControllerSuper getController() {
+    public Object getController() {
         return controller;
     }
 

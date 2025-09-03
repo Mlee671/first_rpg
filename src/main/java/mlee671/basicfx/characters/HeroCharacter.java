@@ -14,6 +14,8 @@ public class HeroCharacter extends BaseCharacter {
       tileSet = new Image(App.class.getResourceAsStream("images/herotileset.png"));
     }
     image = getTile(tileCoords);
+    this.health += 100;
+    this.currentHealth += 100;
   }
 
   // Get the tile image for a specific character from tile map

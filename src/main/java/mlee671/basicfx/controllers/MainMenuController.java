@@ -10,7 +10,7 @@ import mlee671.basicfx.App;
 
 // mlee671.basicfx.controllers.MainMenu
 
-public class MainMenuController extends ControllerSuper {
+public class MainMenuController {
 
   // <Button fx:id="btnStartNewGame" onAction="#startNewGame" text="Start New Game" />
   //   <Button fx:id="btnLoadGame" mnemonicParsing="false" onAction="#loadGame" text="Load Game" />

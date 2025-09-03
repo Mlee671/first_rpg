@@ -12,7 +12,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.shape.Circle;
 import mlee671.basicfx.App;
 
-public class Game1Controller extends ControllerSuper {
+public class Game1Controller {
 
     //<Circle fx:id="iconPlayer"
     //GridPane fx:id="gridArea"

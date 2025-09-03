@@ -1,15 +1,16 @@
 package mlee671.basicfx.gamestates;
 
 import mlee671.basicfx.controllers.ControllerSuper;
+import mlee671.basicfx.controllers.MainMenuController;
 import mlee671.basicfx.controllers.SceneManager;
 import mlee671.basicfx.controllers.SceneManager.SceneType;
 
 public class Menu implements GameState {
 
-    private ControllerSuper controller;
+    private MainMenuController controller;
 
     public Menu() {
-        controller = SceneManager.getController(SceneType.MAINMENU);
+        controller = (MainMenuController) SceneManager.getController(SceneType.MAINMENU);
     }
 
     @Override
@@ -28,7 +29,7 @@ public class Menu implements GameState {
     }
 
     @Override
-    public ControllerSuper getController() {
+    public MainMenuController getController() {
         return controller;
     }
 

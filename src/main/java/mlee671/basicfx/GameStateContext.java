@@ -1,5 +1,7 @@
 package mlee671.basicfx;
 
+import java.io.IOException;
+
 import mlee671.basicfx.controllers.ControllerSuper;
 import mlee671.basicfx.controllers.SceneManager.SceneType;
 import mlee671.basicfx.gamestates.Game1;
@@ -26,7 +28,7 @@ public class GameStateContext {
     currentState = menuState;
   }
 
-  public void update() {
+  public void update() throws IOException {
     currentState.update();
   }
 

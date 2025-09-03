@@ -17,11 +17,17 @@ public class App extends Application {
   private static Scene scene;
   private static GameStateContext context;
   private static Timeline timeline;
+  private static int delay = 1500; // milliseconds
 
   public static void startTimeline() {
     timeline = new Timeline(
-        new KeyFrame(Duration.seconds(0.1), event -> {
-            context.update();
+        new KeyFrame(Duration.millis(delay), event -> {
+            try {
+              context.update();
+            } catch (IOException e) {
+              // TODO Auto-generated catch block
+              e.printStackTrace();
+            }
         })
     );
     timeline.setCycleCount(Timeline.INDEFINITE); // Repeat forever

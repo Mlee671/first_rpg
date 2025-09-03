@@ -13,7 +13,7 @@ public class SceneManager {
   }
 
   private static HashMap<SceneType, Parent> scenes = new HashMap<>();
-  private static HashMap<SceneType, ControllerSuper> controllers = new HashMap<>();
+  private static HashMap<SceneType, Object> controllers = new HashMap<>();
 
   public static void loadScenes(SceneType type, Parent parent) {
     scenes.put(type, parent);
@@ -23,11 +23,11 @@ public class SceneManager {
     return scenes.get(type);
   }
 
-  public static void loadController(SceneType type, ControllerSuper controller) {
+  public static void loadController(SceneType type, Object controller) {
     controllers.put(type, controller);
   }
 
-  public static ControllerSuper getController(SceneType type) {
+  public static Object getController(SceneType type) {
     return controllers.get(type);
   }
 
