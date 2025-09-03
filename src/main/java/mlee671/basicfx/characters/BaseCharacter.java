@@ -3,23 +3,28 @@ package mlee671.basicfx.characters;
 import java.io.BufferedReader;
 import java.io.FileReader;
 
+import javafx.scene.image.Image;
+
 public class BaseCharacter {
 
     protected String name;
     protected String race;
     protected String role;
-    protected int[] image;
+    protected int[] tileCoords;
     protected int health;
     protected int currentHealth;
     protected int str;
     protected int agi;
     protected int wis;
     protected int id;
-    private boolean isDead;
+    protected boolean isDead;
+    protected Image image;
+    protected int tileSize;
 
     public BaseCharacter(int id, String type){  
         this.id = id;
-        this.image = new int[2];
+        this.tileSize = 18;
+        this.tileCoords = new int[2];
         int[] mod = getModifiers(type);
         this.str = (int)(Math.random()*10) + mod[1];
         this.agi = (int)(Math.random()*10) + mod[2];
@@ -41,13 +46,13 @@ public class BaseCharacter {
                 String[] parts = line.split(",");
                 if (lineNum == findRace) {
                     this.race = (parts[0]);
-                    image[1] = Integer.parseInt(parts[parts.length-1].trim());
+                    tileCoords[1] = Integer.parseInt(parts[parts.length-1].trim());
                     for (int j = 1; j < parts.length-1; j++) {
                         mod[j-1] = Integer.parseInt(parts[j].trim());
                     }           
                 } else if (lineNum == findRole) {
                     this.role = (parts[0]);
-                    image[0] = Integer.parseInt(parts[parts.length-1].trim());
+                    tileCoords[0] = Integer.parseInt(parts[parts.length-1].trim());
                     for (int j = 1; j < parts.length-1; j++) {
                     mod[j-1] += Integer.parseInt(parts[j].trim());
                     }
@@ -81,8 +86,8 @@ public class BaseCharacter {
         return wis;
     }
 
-    public int[] getImage() {
-        return image;
+    public int[] getTileCoords() {
+        return tileCoords;
     }
 
     public int getId() {
@@ -115,6 +120,10 @@ public class BaseCharacter {
 
     public boolean isDead() {
         return isDead;
+    }
+
+    public Image getImage() {
+        return image;
     }
 
 }

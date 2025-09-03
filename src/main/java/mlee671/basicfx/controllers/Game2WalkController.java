@@ -15,6 +15,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import mlee671.basicfx.App;
 import mlee671.basicfx.characters.BaseCharacter;
@@ -59,10 +60,7 @@ public class Game2WalkController extends ControllerSuper {
 
   private List<ImageView> Views;
   private List<Rectangle> glowRects;
-  private List<Rectangle> targetRects;
   private List<BaseCharacter> init;
-  private Image tileSet;
-  private int tileSize;
   private boolean characterSelected;
   private BaseCharacter selectedCharacter;
   private int step;
@@ -70,15 +68,25 @@ public class Game2WalkController extends ControllerSuper {
 
   @FXML
   private void initialize() {
-    tileSet = new Image(App.class.getResourceAsStream("images/monstertileset.png"));
-    tileSize = 18;
     step = 0;
     Views =
         List.of(
             imgHero1, imgHero2, imgHero3, imgHero4, imgHero5, imgHero6, imgEnemy1, imgEnemy2,
             imgEnemy3, imgEnemy4, imgEnemy5, imgEnemy6);
-    glowRects = List.of(recGlow1, recGlow2, recGlow3, recGlow4, recGlow5, recGlow6);
-    targetRects = List.of(recTarget1, recTarget2, recTarget3, recTarget4, recTarget5, recTarget6);
+    glowRects =
+        List.of(
+            recGlow1,
+            recGlow2,
+            recGlow3,
+            recGlow4,
+            recGlow5,
+            recGlow6,
+            recTarget1,
+            recTarget2,
+            recTarget3,
+            recTarget4,
+            recTarget5,
+            recTarget6);
     characterSelected = false;
   }
 
@@ -104,15 +112,6 @@ public class Game2WalkController extends ControllerSuper {
     Button btn = (Button) event.getSource();
     Scene scene = btn.getScene();
     App.openScene(scene, "mainmenu");
-  }
-
-  // Get the tile image for a specific character from tile map
-  public Image getTile(int[] coords) {
-    int x = coords[0];
-    int y = coords[1];
-    // Logic to get the tile image from the tileset
-    return new javafx.scene.image.WritableImage(
-        tileSet.getPixelReader(), x * tileSize, y * tileSize, tileSize, tileSize);
   }
 
   // resets selected character when background is clicked
@@ -170,7 +169,7 @@ public class Game2WalkController extends ControllerSuper {
       if (!enemyId.contains(id)) {
         enemyId.add(id);
         BaseCharacter character = new EnemyCharacter(id);
-        characterMap.put(getTile(character.getImage()), character);
+        characterMap.put(character.getImage(), character);
       }
     }
     getCharacterMap()
@@ -186,34 +185,34 @@ public class Game2WalkController extends ControllerSuper {
     throw new UnsupportedOperationException("Unimplemented method 'startEvent'");
   }
 
-  public void pulse() {
-    if (initcount < init.size()) {
-      BaseCharacter character = init.get(initcount);
-      if (!character.isDead()) {
-        attack(character.getAttack(), character.getRole(), character.getId());
-      }
-      initcount++;
-      if (initcount >= init.size()) {
-        initcount = 0;
-      }
+  public boolean pulse() {
+    if (initcount >= init.size()) {
+      initcount = 0;
     }
+    glowRects.forEach(rect -> rect.setVisible(false));
+    BaseCharacter character = init.get(initcount);
+    initcount++;
+    return attack(character.getAttack(), character.getRole(), character.getId());
   }
 
-  private void attack(int damage, String type, int id) {
+  private boolean attack(int damage, String type, int id) {
+    glowRects.get(id-1).setVisible(true);
+    glowRects.get(id-1).setFill(Color.WHITE);
     BaseCharacter target = findTarget(id);
-    System.out.println(
-        type
-            + " "
-            + id
-            + " attacks "
-            + (target != null ? target.getRole() + " " + target.getId() : "no target")
-            + " for "
-            + damage
-            + " damage.");
     if (target != null) {
+      glowRects.get(target.getId() - 1).setVisible(true);
+      glowRects.get(target.getId() - 1).setFill(Color.RED);
       target.takeDamage(damage);
+      if (target.isDead()) {
+        init.remove(target);
+        characterMap.remove(target.getImage());
+        glowRects.get(id-1).setVisible(false);
+        draw();
+      }
+      return false;
     } else {
       System.out.println("No valid target found.");
+      return true;
     }
   }
 
@@ -225,8 +224,7 @@ public class Game2WalkController extends ControllerSuper {
         continue;
       }
       if (id <= 6) {
-        if (character.getId() % 3 == id % 3 && character.getId() < 10) {
-          System.out.println("Target found: in first group");
+        if (character.getId() - 6 == id % 3) {
           return character;
         } else if (6 < character.getId() && character.getId() < 10) {
           target = character;
@@ -234,21 +232,18 @@ public class Game2WalkController extends ControllerSuper {
           secondaryTarget = character;
         }
       } else {
-        if (character.getId() == id - 3 && character.getId() < 7) {
-          System.out.println("Target found: in first group");
+        if (character.getId() == id % 3) {
           return character;
         } else if (character.getId() <= 3) {
           target = character;
-        } else if (character.getId() <= 6 && character.getId() > 3) {
+        } else if (character.getId() <= 6) {
           secondaryTarget = character;
         }
       }
     }
     if (target != null) {
-      System.out.println("Target found: in second group");
       return target;
     } else {
-      System.out.println("Target found: in third group");
       return secondaryTarget;
     }
   }

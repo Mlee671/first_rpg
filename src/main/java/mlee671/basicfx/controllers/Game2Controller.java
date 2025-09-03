@@ -45,16 +45,12 @@ public class Game2Controller extends ControllerSuper {
   
   private List<ImageView> heroViews;
   private List<Rectangle> glowRects;
-  private Image tileSet;
-  private int tileSize;
   private boolean characterSelected;
   private BaseCharacter selectedCharacter;
 
   @FXML
   private void initialize() {
     characterMap = new HashMap<>();
-    tileSet = new Image(App.class.getResourceAsStream("images/herotileset.png"));
-    tileSize = 18;
     heroViews = List.of(imgHero1, imgHero2, imgHero3, imgHero4, imgHero5, imgHero6);
     glowRects = List.of(recGlow1, recGlow2, recGlow3, recGlow4, recGlow5, recGlow6);
     characterSelected = false;
@@ -69,7 +65,7 @@ public class Game2Controller extends ControllerSuper {
     characterMap.clear();
     for (int i = 1; i <= 4; i++) {
       BaseCharacter character = new HeroCharacter(i);
-      characterMap.put(getTile(character.getImage()), character);
+      characterMap.put(character.getImage(), character);
     }
     draw();
     pane.setVisible(false);
@@ -103,15 +99,6 @@ public class Game2Controller extends ControllerSuper {
     Button btn = (Button) event.getSource();
     Scene scene = btn.getScene();
     App.openScene(scene, "game2walk");
-  }
-
-  // Get the tile image for a specific character from tile map
-  public Image getTile(int[] coords) {
-    int x = coords[0];
-    int y = coords[1];
-    // Logic to get the tile image from the tileset
-    return new javafx.scene.image.WritableImage(
-        tileSet.getPixelReader(), x * tileSize, y * tileSize, tileSize, tileSize);
   }
 
   // resets selected character when background is clicked

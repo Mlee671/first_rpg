@@ -57,7 +57,7 @@ public class Game2Walk implements GameState {
             }
         } else if (count > delay) {
             count = 0;
-            controller.pulse();
+            walking = controller.pulse();
         }
         controller.draw();
     }
