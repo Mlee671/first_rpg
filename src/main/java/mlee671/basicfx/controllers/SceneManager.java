@@ -8,7 +8,8 @@ public class SceneManager {
   public enum SceneType {
     MAINMENU,
     GAME1,
-    GAME2
+    GAME2,
+    GAME2WALK
   }
 
   private static HashMap<SceneType, Parent> scenes = new HashMap<>();

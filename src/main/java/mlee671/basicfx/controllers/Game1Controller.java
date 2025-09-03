@@ -65,8 +65,8 @@ public class Game1Controller extends ControllerSuper {
         if (playerOnEnemy()) {
             System.out.println("You encountered an enemy!");
             score = 0;
-            pCoord[0] = GridPane.getRowIndex(iconEnemy);
-            pCoord[1] = GridPane.getColumnIndex(iconEnemy);
+            pCoord[0] = GridPane.getRowIndex(iconPlayer);
+            pCoord[1] = GridPane.getColumnIndex(iconPlayer);
             return;
         }
         // Move the player icon
@@ -137,6 +137,20 @@ public class Game1Controller extends ControllerSuper {
         // Logic to increase the player's score
         score++;
         System.out.println("Score increased! Current score: " + score);
+    }
+
+    public void restartGame() {
+        // Logic to restart the game
+        score = 0;
+        pCoord = new int[]{0, 0};
+        eCoord = new int[]{4, 4};
+        imCoord = new int[]{2, 2};
+        GridPane.setRowIndex(imageApple, imCoord[0]);
+        GridPane.setColumnIndex(imageApple, imCoord[1]);
+        GridPane.setRowIndex(iconEnemy, eCoord[0]);
+        GridPane.setColumnIndex(iconEnemy, eCoord[1]);
+        GridPane.setRowIndex(iconPlayer, pCoord[0]);
+        GridPane.setColumnIndex(iconPlayer, pCoord[1]);
     }
 
     @FXML

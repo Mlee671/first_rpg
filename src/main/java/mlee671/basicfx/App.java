@@ -1,9 +1,12 @@
 package mlee671.basicfx;
 
 import java.io.IOException;
+import javafx.util.Duration;
+
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import mlee671.basicfx.controllers.SceneManager;
@@ -12,7 +15,28 @@ import mlee671.basicfx.controllers.SceneManager;
 public class App extends Application {
 
   private static Scene scene;
-  private GameState context;
+  private static GameStateContext context;
+  private static Timeline timeline;
+
+  public static void startTimeline() {
+    timeline = new Timeline(
+        new KeyFrame(Duration.seconds(0.1), event -> {
+            context.update();
+        })
+    );
+    timeline.setCycleCount(Timeline.INDEFINITE); // Repeat forever
+    timeline.play();
+  }
+
+  public static void stopTimeline() {
+    if (timeline != null) {
+      timeline.stop();
+    }
+  }
+
+  public static void main(String[] args) {
+    launch();
+  }
 
   @Override
   public void start(Stage stage) throws IOException {
@@ -20,10 +44,10 @@ public class App extends Application {
     for (SceneManager.SceneType type : SceneManager.SceneType.values()) {
       FXMLLoader fxmlLoader =
           new FXMLLoader(App.class.getResource("fxml/" + type.name().toLowerCase() + ".fxml"));
-      SceneManager.loadController(type, fxmlLoader.getController());
       SceneManager.loadScenes(type, fxmlLoader.load());
+      SceneManager.loadController(type, fxmlLoader.getController());
     }
-    context = new GameState();
+    context = new GameStateContext();
     scene = new Scene(SceneManager.getScene(SceneManager.SceneType.MAINMENU), 640, 480);
     stage.setScene(scene);
     stage.show();
@@ -31,15 +55,14 @@ public class App extends Application {
 
   public static void openScene(Scene newScene, String name) throws IOException {
     scene = newScene;
+    context.setCurrentScene(name);
     scene.setRoot(SceneManager.getScene(SceneManager.SceneType.valueOf(name.toUpperCase())));
   }
 
-//   private static Parent loadFXML(String fxml) throws IOException {
-//     FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("fxml/" + fxml + ".fxml"));
-//     return fxmlLoader.load();
-//   }
+  //   private static Parent loadFXML(String fxml) throws IOException {
+  //     FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("fxml/" + fxml + ".fxml"));
+  //     return fxmlLoader.load();
+  //   }
 
-  public static void main(String[] args) {
-    launch();
-  }
+  
 }

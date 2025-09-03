@@ -17,12 +17,19 @@
       </ImageView>
       <Button fx:id="btnMenu" layoutX="26.0" layoutY="433.0" mnemonicParsing="false" onAction="#onMenu" text="Menu" />
       <Button fx:id="btnRoll" layoutX="579.0" layoutY="433.0" mnemonicParsing="false" onAction="#onReroll" text="Reroll" />
-      <ImageView fx:id="imgHero1" fitHeight="36.0" fitWidth="36.0" layoutX="212.0" layoutY="222.0" onMouseClicked="#onClickCharacter" pickOnBounds="true" preserveRatio="true" />
-      <ImageView fx:id="imgHero2" fitHeight="36.0" fitWidth="36.0" layoutX="302.0" layoutY="240.0" onMouseClicked="#onClickCharacter" pickOnBounds="true" preserveRatio="true" />
-      <ImageView fx:id="imgHero3" fitHeight="36.0" fitWidth="36.0" layoutX="386.0" layoutY="240.0" onMouseClicked="#onClickCharacter" pickOnBounds="true" preserveRatio="true" />
-      <ImageView fx:id="imgHero4" fitHeight="36.0" fitWidth="36.0" layoutX="230.0" layoutY="303.0" onMouseClicked="#onClickCharacter" pickOnBounds="true" preserveRatio="true" />
-      <ImageView fx:id="imgHero5" fitHeight="36.0" fitWidth="36.0" layoutX="302.0" layoutY="303.0" onMouseClicked="#onClickCharacter" pickOnBounds="true" preserveRatio="true" />
-      <ImageView fx:id="imgHero6" fitHeight="36.0" fitWidth="36.0" layoutX="386.0" layoutY="303.0" onMouseClicked="#onClickCharacter" pickOnBounds="true" preserveRatio="true" />
+      <Button fx:id="btnNext" layoutX="300.0" layoutY="433.0" mnemonicParsing="false" onAction="#onNext" text="Next" />
+      <Rectangle fx:id="recGlow1" arcHeight="5.0" arcWidth="5.0" fill="#ffffff33" height="40.0" layoutX="148.0" layoutY="295.0" stroke="BLACK" strokeType="INSIDE" visible="false" width="40.0" />
+      <Rectangle fx:id="recGlow2" arcHeight="5.0" arcWidth="5.0" fill="#ffffff33" height="40.0" layoutX="223.0" layoutY="295.0" stroke="BLACK" strokeType="INSIDE" visible="false" width="40.0" />
+      <Rectangle fx:id="recGlow3" arcHeight="5.0" arcWidth="5.0" fill="#ffffff33" height="40.0" layoutX="298.0" layoutY="295.0" stroke="BLACK" strokeType="INSIDE" visible="false" width="40.0" />
+      <Rectangle fx:id="recGlow4" arcHeight="5.0" arcWidth="5.0" fill="#ffffff33" height="40.0" layoutX="148.0" layoutY="348.0" stroke="BLACK" strokeType="INSIDE" visible="false" width="40.0" />
+      <Rectangle fx:id="recGlow5" arcHeight="5.0" arcWidth="5.0" fill="#ffffff33" height="40.0" layoutX="223.0" layoutY="348.0" stroke="BLACK" strokeType="INSIDE" visible="false" width="40.0" />
+      <Rectangle fx:id="recGlow6" arcHeight="5.0" arcWidth="5.0" fill="#ffffff33" height="40.0" layoutX="298.0" layoutY="348.0" stroke="BLACK" strokeType="INSIDE" visible="false" width="40.0" />
+      <ImageView fx:id="imgHero1" fitHeight="36.0" fitWidth="36.0" layoutX="150.0" layoutY="300.0" onMouseClicked="#onClickCharacter" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="imgHero2" fitHeight="36.0" fitWidth="36.0" layoutX="225.0" layoutY="300.0" onMouseClicked="#onClickCharacter" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="imgHero3" fitHeight="36.0" fitWidth="36.0" layoutX="300.0" layoutY="300.0" onMouseClicked="#onClickCharacter" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="imgHero4" fitHeight="36.0" fitWidth="36.0" layoutX="150.0" layoutY="350.0" onMouseClicked="#onClickCharacter" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="imgHero5" fitHeight="36.0" fitWidth="36.0" layoutX="225.0" layoutY="350.0" onMouseClicked="#onClickCharacter" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="imgHero6" fitHeight="36.0" fitWidth="36.0" layoutX="300.0" layoutY="350.0" onMouseClicked="#onClickCharacter" pickOnBounds="true" preserveRatio="true" />
       <Pane fx:id="pane" layoutX="440.0" prefHeight="422.0" prefWidth="200.0">
          <children>
             <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#fcfcfc" height="422.0" stroke="BLACK" strokeType="INSIDE" width="200.0" />
