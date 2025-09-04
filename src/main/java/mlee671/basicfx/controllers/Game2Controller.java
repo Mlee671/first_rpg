@@ -1,8 +1,16 @@
 package mlee671.basicfx.controllers;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
+
+import javax.sound.midi.InvalidMidiDataException;
+import javax.sound.midi.MidiSystem;
+import javax.sound.midi.MidiUnavailableException;
+import javax.sound.midi.Sequence;
+import javax.sound.midi.Sequencer;
+
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
@@ -15,17 +23,36 @@ public class Game2Controller extends ControllerSuper {
 
   @FXML private Button btnRoll;
   @FXML private Button btnMenu;
+  Sequence sequence;
+  Sequencer sequencer;
 
   @FXML
-  private void initialize() {
+  private void initialize() throws InvalidMidiDataException, IOException, MidiUnavailableException {
     characterMap = new HashMap<>();
     Views = List.of(imgHero1, imgHero2, imgHero3, imgHero4, imgHero5, imgHero6);
     glowRects = List.of(recGlow1, recGlow2, recGlow3, recGlow4, recGlow5, recGlow6);
     characterSelected = false;
+    sequence = MidiSystem.getSequence(new File(App.class.getResource("music/city.mid").toString()));
+    sequencer = MidiSystem.getSequencer();
   }
 
   public void onEnter() {
+    try {
+      sequencer.open();
+      sequencer.setSequence(sequence);
+    } catch (InvalidMidiDataException | MidiUnavailableException e) {
+      // TODO Auto-generated catch block
+      e.printStackTrace();
+    }
+    sequencer.start();
     onReroll();
+  }
+
+  public void onExit() {
+    if (sequencer != null && sequencer.isOpen()) {
+      sequencer.stop();
+      sequencer.close();
+    }
   }
 
   // Handle reroll button click

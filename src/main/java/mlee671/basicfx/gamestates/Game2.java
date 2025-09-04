@@ -19,7 +19,7 @@ public class Game2 implements GameState {
 
   @Override
   public void exit() {
-    // Logic for exiting the game 2 state
+    controller.onExit();
   }
 
   @Override

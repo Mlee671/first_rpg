@@ -18,8 +18,8 @@ public class App extends Application {
   private static GameStateContext context;
   private static Timeline timeline;
   private static int delay = 1500; // milliseconds
-      private static Image monsterTileSet;
-    private static Image heroTileSet;
+  private static Image monsterTileSet;
+  private static Image heroTileSet;
 
   public static void startTimeline() {
     timeline =
@@ -51,12 +51,9 @@ public class App extends Application {
   @Override
   public void start(Stage stage) throws IOException {
 
+    monsterTileSet = new Image(getClass().getResourceAsStream("images/monstertileset.png"));
 
-            monsterTileSet = new Image(getClass().getResourceAsStream("images/monstertileset.png"));
-
-
-            heroTileSet = new Image(getClass().getResourceAsStream("images/herotileset.png"));
-
+    heroTileSet = new Image(getClass().getResourceAsStream("images/herotileset.png"));
 
     for (SceneManager.SceneType type : SceneManager.SceneType.values()) {
       FXMLLoader fxmlLoader =

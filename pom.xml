@@ -42,6 +42,7 @@
                         <id>default-cli</id>
                         <configuration>
                             <mainClass>mlee671.basicfx.App</mainClass>
+                            <jvmArgs>--add-modules=java.desktop</jvmArgs>
                         </configuration>
                     </execution>
                 </executions>

@@ -1,6 +1,10 @@
 package mlee671.basicfx;
 
 import java.io.IOException;
+
+import javax.sound.midi.InvalidMidiDataException;
+import javax.sound.midi.MidiUnavailableException;
+
 import mlee671.basicfx.gamestates.Game1;
 import mlee671.basicfx.gamestates.Game2;
 import mlee671.basicfx.gamestates.Game2Walk;
@@ -32,7 +36,12 @@ public class GameStateContext {
   public void setCurrentScene(String scene) {
     currentState.exit();
     this.currentState = changeState(scene);
-    currentState.enter();
+    try {
+      currentState.enter();
+    } catch (InvalidMidiDataException | MidiUnavailableException e) {
+      // TODO Auto-generated catch block
+      e.printStackTrace();
+    }
   }
 
   private GameState changeState(String scene) {

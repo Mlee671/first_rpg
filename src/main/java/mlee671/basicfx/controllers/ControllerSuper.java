@@ -3,6 +3,9 @@ package mlee671.basicfx.controllers;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
+
+
+
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
@@ -39,6 +42,7 @@ public class ControllerSuper {
   @FXML protected Rectangle recGlow5;
   @FXML protected Rectangle recGlow6;
   protected boolean inBattle = false;
+ 
 
   protected static HashMap<Image, BaseCharacter> characterMap;
 
