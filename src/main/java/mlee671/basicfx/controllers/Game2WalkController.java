@@ -70,6 +70,7 @@ public class Game2WalkController extends ControllerSuper {
   }
 
   public void onEnter() {
+    combatMap.clear();
     step = 0;
     characterSelected = false;
     lblStep.setText("Step: " + step);

@@ -22,6 +22,9 @@ public class Game2Controller extends ControllerSuper {
     Views = List.of(imgHero1, imgHero2, imgHero3, imgHero4, imgHero5, imgHero6);
     glowRects = List.of(recGlow1, recGlow2, recGlow3, recGlow4, recGlow5, recGlow6);
     characterSelected = false;
+  }
+
+  public void onEnter() {
     onReroll();
   }
 

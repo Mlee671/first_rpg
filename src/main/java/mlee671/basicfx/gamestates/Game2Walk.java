@@ -39,21 +39,5 @@ public class Game2Walk implements GameState {
   @Override
   public void update() {
     controller.pulse();
-    // if (walking) {
-
-    //   controller.addStep();
-
-      // if (Math.random() < 0.05) {
-      //   controller.startBattle();
-      //   walking = false;
-      // } else if (Math.random() > 0.95) {
-      //   System.out.println("Event triggered!");
-      //   /// walking = false;
-      //   // controller.startEvent();
-      // }
-
-    // } else {
-    //   walking = controller.pulse();
-    // }
   }
 }
