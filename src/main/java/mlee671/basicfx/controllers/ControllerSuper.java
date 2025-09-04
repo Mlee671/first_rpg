@@ -4,7 +4,8 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 
-
+import javax.sound.midi.Sequence;
+import javax.sound.midi.Sequencer;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
@@ -42,6 +43,8 @@ public class ControllerSuper {
   @FXML protected Rectangle recGlow5;
   @FXML protected Rectangle recGlow6;
   protected boolean inBattle = false;
+  Sequence sequence;
+  Sequencer sequencer;
  
 
   protected static HashMap<Image, BaseCharacter> characterMap;

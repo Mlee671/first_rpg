@@ -23,8 +23,7 @@ public class Game2Controller extends ControllerSuper {
 
   @FXML private Button btnRoll;
   @FXML private Button btnMenu;
-  Sequence sequence;
-  Sequencer sequencer;
+
 
   @FXML
   private void initialize() throws InvalidMidiDataException, IOException, MidiUnavailableException {
@@ -32,7 +31,7 @@ public class Game2Controller extends ControllerSuper {
     Views = List.of(imgHero1, imgHero2, imgHero3, imgHero4, imgHero5, imgHero6);
     glowRects = List.of(recGlow1, recGlow2, recGlow3, recGlow4, recGlow5, recGlow6);
     characterSelected = false;
-    sequence = MidiSystem.getSequence(new File(App.class.getResource("music/city.mid").toString()));
+    sequence = MidiSystem.getSequence(getClass().getResourceAsStream("/mlee671/basicfx/music/city.MID"));
     sequencer = MidiSystem.getSequencer();
   }
 

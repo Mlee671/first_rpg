@@ -23,6 +23,7 @@ public class Game2Walk implements GameState {
 
   @Override
   public void exit() {
+    controller.onExit();
     App.stopTimeline();
   }
 

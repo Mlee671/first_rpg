@@ -6,6 +6,11 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+
+import javax.sound.midi.InvalidMidiDataException;
+import javax.sound.midi.MidiSystem;
+import javax.sound.midi.MidiUnavailableException;
+
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
@@ -67,9 +72,24 @@ public class Game2WalkController extends ControllerSuper {
             recTarget4,
             recTarget5,
             recTarget6);
+    try {
+    sequence = MidiSystem.getSequence(getClass().getResourceAsStream("/mlee671/basicfx/music/DUNGEON.MID"));
+    sequencer = MidiSystem.getSequencer();
+    } catch (InvalidMidiDataException | MidiUnavailableException | IOException e) {
+      // TODO Auto-generated catch block
+      e.printStackTrace();
+    }
   }
 
   public void onEnter() {
+     try {
+      sequencer.open();
+      sequencer.setSequence(sequence);
+    } catch (InvalidMidiDataException | MidiUnavailableException e) {
+      // TODO Auto-generated catch block
+      e.printStackTrace();
+    }
+    sequencer.start();
     combatMap.clear();
     step = 0;
     characterSelected = false;
@@ -96,9 +116,16 @@ public class Game2WalkController extends ControllerSuper {
     draw();
   }
 
+  public void onExit() {
+    if (sequencer != null && sequencer.isOpen()) {
+      sequencer.stop();
+      sequencer.close();
+    }
+  }
+
   // Handle menu button click
   @FXML
-  private void onExit(ActionEvent event) throws IOException {
+  private void onExitBtn(ActionEvent event) throws IOException {
     Button btn = (Button) event.getSource();
     Scene scene = btn.getScene();
     App.openScene(scene, "mainmenu");

@@ -15,7 +15,7 @@
             <Image url="@../images/cave%20art.png" />
          </image>
       </ImageView>
-      <Button fx:id="btnMenu" layoutX="26.0" layoutY="433.0" mnemonicParsing="false" onAction="#onExit" text="Menu" />
+      <Button fx:id="btnMenu" layoutX="26.0" layoutY="433.0" mnemonicParsing="false" onAction="#onExitBtn" text="Menu" />
       <Rectangle fx:id="recGlow1" arcHeight="5.0" arcWidth="5.0" fill="#ffffff33" height="40.0" layoutX="148.0" layoutY="295.0" stroke="BLACK" strokeType="INSIDE" visible="false" width="40.0" />
       <Rectangle fx:id="recGlow2" arcHeight="5.0" arcWidth="5.0" fill="#ffffff33" height="40.0" layoutX="223.0" layoutY="295.0" stroke="BLACK" strokeType="INSIDE" visible="false" width="40.0" />
       <Rectangle fx:id="recGlow3" arcHeight="5.0" arcWidth="5.0" fill="#ffffff33" height="40.0" layoutX="298.0" layoutY="295.0" stroke="BLACK" strokeType="INSIDE" visible="false" width="40.0" />
