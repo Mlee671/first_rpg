@@ -22,6 +22,7 @@ public class BaseCharacter {
     protected int tileSize;
 
     public BaseCharacter(int id, String type){  
+        
         this.id = id;
         this.tileSize = 18;
         this.tileCoords = new int[2];

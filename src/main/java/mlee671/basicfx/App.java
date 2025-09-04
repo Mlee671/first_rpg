@@ -6,6 +6,7 @@ import javafx.animation.Timeline;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import mlee671.basicfx.controllers.SceneManager;
@@ -17,6 +18,8 @@ public class App extends Application {
   private static GameStateContext context;
   private static Timeline timeline;
   private static int delay = 1500; // milliseconds
+      private static Image monsterTileSet;
+    private static Image heroTileSet;
 
   public static void startTimeline() {
     timeline =
@@ -48,6 +51,13 @@ public class App extends Application {
   @Override
   public void start(Stage stage) throws IOException {
 
+
+            monsterTileSet = new Image(getClass().getResourceAsStream("images/monstertileset.png"));
+
+
+            heroTileSet = new Image(getClass().getResourceAsStream("images/herotileset.png"));
+
+
     for (SceneManager.SceneType type : SceneManager.SceneType.values()) {
       FXMLLoader fxmlLoader =
           new FXMLLoader(App.class.getResource("fxml/" + type.name().toLowerCase() + ".fxml"));
@@ -64,5 +74,13 @@ public class App extends Application {
     scene = newScene;
     context.setCurrentScene(name);
     scene.setRoot(SceneManager.getScene(SceneManager.SceneType.valueOf(name.toUpperCase())));
+  }
+
+  public static Image getMonsterTileSet() {
+    return monsterTileSet;
+  }
+
+  public static Image getHeroTileSet() {
+    return heroTileSet;
   }
 }

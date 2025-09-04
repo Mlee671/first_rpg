@@ -29,7 +29,7 @@ public class Game2Controller extends ControllerSuper {
   // generates and stores new characters and images
   // calls draw method
   @FXML
-  private void onReroll() {
+  public void onReroll() {
     characterMap.clear();
     for (int i = 1; i <= 4; i++) {
       BaseCharacter character = new HeroCharacter(i);

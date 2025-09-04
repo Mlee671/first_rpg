@@ -14,7 +14,7 @@ public class Game2 implements GameState {
 
   @Override
   public void enter() {
-    // Logic for entering the game 2 state
+    controller.onReroll();
   }
 
   @Override

@@ -40,7 +40,7 @@
       <ImageView fx:id="imgEnemy1" fitHeight="36.0" fitWidth="36.0" layoutX="150.0" layoutY="150.0" pickOnBounds="true" preserveRatio="true" />
       <ImageView fx:id="imgEnemy2" fitHeight="36.0" fitWidth="36.0" layoutX="225.0" layoutY="150.0" pickOnBounds="true" preserveRatio="true" />
       <ImageView fx:id="imgEnemy3" fitHeight="36.0" fitWidth="36.0" layoutX="300.0" layoutY="150.0" pickOnBounds="true" preserveRatio="true" />
-      <Pane fx:id="pane" layoutX="440.0" prefHeight="422.0" prefWidth="200.0">
+      <Pane fx:id="pane" layoutX="440.0" prefHeight="422.0" prefWidth="200.0" visible="false">
          <children>
             <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#fcfcfc" height="422.0" stroke="BLACK" strokeType="INSIDE" width="200.0" />
             <Label fx:id="lblName" layoutX="18.0" layoutY="27.0" prefHeight="36.0" prefWidth="96.0" text="hello">

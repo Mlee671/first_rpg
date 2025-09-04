@@ -11,6 +11,7 @@ import javafx.fxml.FXML;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
@@ -39,11 +40,15 @@ public class Game2WalkController extends ControllerSuper {
   private List<BaseCharacter> init;
   private int step;
   private int initcount;
-  private HashMap<Integer, Set<Integer>> combatMap;
+  private HashMap<Integer, HashMap<Image, BaseCharacter>> combatMap;
+  private Color red;
+  private Color white;
 
   @FXML
   private void initialize() {
-    step = 0;
+    combatMap = new HashMap<>();
+    red = new Color(1, 0, 0, 0.2); // RGBA, alpha=0.2 for 20% transparency
+    white = new Color(1, 1, 1, 0.2); // RGBA, alpha=0.2 for 20% transparency
     Views =
         List.of(
             imgHero1, imgHero2, imgHero3, imgHero4, imgHero5, imgHero6, imgEnemy1, imgEnemy2,
@@ -62,17 +67,32 @@ public class Game2WalkController extends ControllerSuper {
             recTarget4,
             recTarget5,
             recTarget6);
+  }
+
+  public void onEnter() {
+    step = 0;
     characterSelected = false;
+    lblStep.setText("Step: " + step);
+    inBattle = false;
+    initcount = 0;
+    glowRects.forEach(rect -> rect.setFill(white));
     int encounters = getRand();
     int onStep;
-    combatMap = new HashMap<>();
+    int numMonsters;
     for (int i = 1; i <= encounters; i++) {
-      onStep = (int) (Math.random() * 100) + 1;
-      combatMap.put(onStep, new HashSet<>());
-      for (int j = 0; j < 6; j++) {
-        combatMap.get(onStep).add(getRand() + 6);
+      onStep = (int) (Math.random() * 100) + 6;
+      numMonsters = getRand();
+      combatMap.put(onStep, new HashMap<>());
+      Set<Integer> uniqueNumbers = new HashSet<>();
+      while (uniqueNumbers.size() < numMonsters) {
+        uniqueNumbers.add(getRand() + 6);
+      }
+      for (int j = 0; j < numMonsters; j++) {
+        BaseCharacter enemy = new EnemyCharacter(uniqueNumbers.iterator().next());
+        combatMap.get(onStep).put(enemy.getImage(), enemy);
       }
     }
+    draw();
   }
 
   // Handle menu button click
@@ -98,9 +118,8 @@ public class Game2WalkController extends ControllerSuper {
       combatMap
           .get(step)
           .forEach(
-              id -> {
-                BaseCharacter character = new EnemyCharacter(id);
-                characterMap.put(character.getImage(), character);
+              (Image, character) -> {
+                characterMap.put(Image, character);
               });
       startBattle();
     }
@@ -149,11 +168,11 @@ public class Game2WalkController extends ControllerSuper {
 
   private void attack(int damage, String type, int id) {
     glowRects.get(id - 1).setVisible(true);
-    glowRects.get(id - 1).setFill(Color.WHITE);
+    glowRects.get(id - 1).setFill(white);
     BaseCharacter target = findTarget(id);
     if (target != null) {
       glowRects.get(target.getId() - 1).setVisible(true);
-      glowRects.get(target.getId() - 1).setFill(Color.RED);
+      glowRects.get(target.getId() - 1).setFill(red);
       target.takeDamage(damage);
       if (target.isDead()) {
         init.remove(target);
