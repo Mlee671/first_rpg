@@ -7,12 +7,6 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.Pane;
-import javafx.scene.shape.Rectangle;
 import mlee671.basicfx.App;
 import mlee671.basicfx.characters.BaseCharacter;
 import mlee671.basicfx.characters.HeroCharacter;
@@ -21,7 +15,6 @@ public class Game2Controller extends ControllerSuper {
 
   @FXML private Button btnRoll;
   @FXML private Button btnMenu;
-
 
   @FXML
   private void initialize() {
@@ -46,10 +39,6 @@ public class Game2Controller extends ControllerSuper {
     pane.setVisible(false);
   }
 
-
-
-
-
   // Handle menu button click
   @FXML
   private void onMenu(ActionEvent event) throws IOException {
@@ -64,6 +53,4 @@ public class Game2Controller extends ControllerSuper {
     Scene scene = btn.getScene();
     App.openScene(scene, "game2walk");
   }
-
-
 }

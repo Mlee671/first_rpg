@@ -1,14 +1,13 @@
 package mlee671.basicfx;
 
 import java.io.IOException;
-import javafx.util.Duration;
-
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 import mlee671.basicfx.controllers.SceneManager;
 
 /** JavaFX App */
@@ -20,16 +19,18 @@ public class App extends Application {
   private static int delay = 1500; // milliseconds
 
   public static void startTimeline() {
-    timeline = new Timeline(
-        new KeyFrame(Duration.millis(delay), event -> {
-            try {
-              context.update();
-            } catch (IOException e) {
-              // TODO Auto-generated catch block
-              e.printStackTrace();
-            }
-        })
-    );
+    timeline =
+        new Timeline(
+            new KeyFrame(
+                Duration.millis(delay),
+                event -> {
+                  try {
+                    context.update();
+                  } catch (IOException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                  }
+                }));
     timeline.setCycleCount(Timeline.INDEFINITE); // Repeat forever
     timeline.play();
   }

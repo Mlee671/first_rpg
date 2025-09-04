@@ -11,10 +11,8 @@ import javafx.fxml.FXML;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import mlee671.basicfx.App;
@@ -41,7 +39,7 @@ public class Game2WalkController extends ControllerSuper {
   private List<BaseCharacter> init;
   private int step;
   private int initcount;
-  private Set<Integer> enemyId;
+  private HashMap<Integer, Set<Integer>> combatMap;
 
   @FXML
   private void initialize() {
@@ -65,6 +63,16 @@ public class Game2WalkController extends ControllerSuper {
             recTarget5,
             recTarget6);
     characterSelected = false;
+    int encounters = getRand();
+    int onStep;
+    combatMap = new HashMap<>();
+    for (int i = 1; i <= encounters; i++) {
+      onStep = (int) (Math.random() * 100) + 1;
+      combatMap.put(onStep, new HashSet<>());
+      for (int j = 0; j < 6; j++) {
+        combatMap.get(onStep).add(getRand() + 6);
+      }
+    }
   }
 
   // Handle menu button click
@@ -75,12 +83,27 @@ public class Game2WalkController extends ControllerSuper {
     App.openScene(scene, "mainmenu");
   }
 
+  private int getRand() {
+    return (int) (Math.random() * 6) + 1;
+  }
+
   @FXML
   private void onClickAbility(MouseEvent event) throws IOException {}
 
-  public void addStep(){
+  public void addStep() {
+
     step++;
     lblStep.setText("Step: " + step);
+    if (combatMap.containsKey(step)) {
+      combatMap
+          .get(step)
+          .forEach(
+              id -> {
+                BaseCharacter character = new EnemyCharacter(id);
+                characterMap.put(character.getImage(), character);
+              });
+      startBattle();
+    }
     if (step >= 100) {
       Scene scene = pane.getScene();
       try {
@@ -96,23 +119,11 @@ public class Game2WalkController extends ControllerSuper {
     this.init = new ArrayList<>();
     this.initcount = 0;
     inBattle = true;
-    int enemy = (int) (Math.random() * 6) + 1;
-    enemyId = new HashSet<>();
-    while (enemyId.size() < enemy) {
-      int id = (int) (Math.random() * 6) + 7;
-      if (!enemyId.contains(id)) {
-        enemyId.add(id);
-        BaseCharacter character = new EnemyCharacter(id);
-        characterMap.put(character.getImage(), character);
-      }
-    }
-    System.out.println("Enemies: " + enemyId);
     getCharacterMap()
         .forEach(
             (image, character) -> {
               init.add(character);
             });
-    System.out.println("Initial Characters: " + init);
     draw();
   }
 
@@ -121,19 +132,24 @@ public class Game2WalkController extends ControllerSuper {
     throw new UnsupportedOperationException("Unimplemented method 'startEvent'");
   }
 
-  public boolean pulse() {
-    if (initcount >= init.size()) {
-      initcount = 0;
+  public void pulse() {
+    if (inBattle) {
+      draw();
+      if (initcount >= init.size()) {
+        initcount = 0;
+      }
+      glowRects.forEach(rect -> rect.setVisible(false));
+      BaseCharacter character = init.get(initcount);
+      initcount++;
+      attack(character.getAttack(), character.getRole(), character.getId());
+    } else {
+      addStep();
     }
-    glowRects.forEach(rect -> rect.setVisible(false));
-    BaseCharacter character = init.get(initcount);
-    initcount++;
-    return attack(character.getAttack(), character.getRole(), character.getId());
   }
 
-  private boolean attack(int damage, String type, int id) {
-    glowRects.get(id-1).setVisible(true);
-    glowRects.get(id-1).setFill(Color.WHITE);
+  private void attack(int damage, String type, int id) {
+    glowRects.get(id - 1).setVisible(true);
+    glowRects.get(id - 1).setFill(Color.WHITE);
     BaseCharacter target = findTarget(id);
     if (target != null) {
       glowRects.get(target.getId() - 1).setVisible(true);
@@ -144,13 +160,10 @@ public class Game2WalkController extends ControllerSuper {
         characterMap.remove(target.getImage());
         draw();
       }
-      return false;
     } else {
       System.out.println("No valid target found.");
-      glowRects.get(id-1).setVisible(false);
+      glowRects.get(id - 1).setVisible(false);
       inBattle = false;
-      draw();
-      return true;
     }
   }
 

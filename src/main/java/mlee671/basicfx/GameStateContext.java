@@ -1,14 +1,11 @@
 package mlee671.basicfx;
 
 import java.io.IOException;
-
-import mlee671.basicfx.controllers.ControllerSuper;
-import mlee671.basicfx.controllers.SceneManager.SceneType;
 import mlee671.basicfx.gamestates.Game1;
 import mlee671.basicfx.gamestates.Game2;
 import mlee671.basicfx.gamestates.Game2Walk;
-import mlee671.basicfx.gamestates.Menu;
 import mlee671.basicfx.gamestates.GameState;
+import mlee671.basicfx.gamestates.Menu;
 
 public class GameStateContext {
 
