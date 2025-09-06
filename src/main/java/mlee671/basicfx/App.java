@@ -17,11 +17,12 @@ public class App extends Application {
   private static Scene scene;
   private static GameStateContext context;
   private static Timeline timeline;
-  private static int delay = 1500; // milliseconds
+  private static int delay; // milliseconds
   private static Image monsterTileSet;
   private static Image heroTileSet;
 
-  public static void startTimeline() {
+  public static void startTimeline(int newDelay) {
+    delay = newDelay;
     timeline =
         new Timeline(
             new KeyFrame(

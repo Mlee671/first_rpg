@@ -18,7 +18,7 @@ public class Game2Walk implements GameState {
   @Override
   public void enter() {
     controller.onEnter();
-    App.startTimeline();
+    App.startTimeline(1500);
   }
 
   @Override

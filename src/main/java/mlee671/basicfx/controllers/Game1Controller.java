@@ -1,172 +1,164 @@
 package mlee671.basicfx.controllers;
 
-import java.io.File;
-import java.io.IOException;
-
-
-
-import javafx.event.ActionEvent;
+import java.util.ArrayList;
+import java.util.List;
 import javafx.fxml.FXML;
-import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.image.ImageView;
+import javafx.scene.canvas.Canvas;
 import javafx.scene.input.KeyEvent;
-import javafx.scene.layout.GridPane;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import mlee671.basicfx.App;
 
 public class Game1Controller {
 
-    //<Circle fx:id="iconPlayer"
-    //GridPane fx:id="gridArea"
-    //onKeyPressed="#onKeyPress"
-    @FXML private Circle iconPlayer;
-    @FXML private Circle iconEnemy;
-    @FXML private GridPane gridArea;
-    @FXML private Button btnMenu;
-    @FXML private Button btnExit;
-    @FXML private ImageView imageApple;
+  @FXML private Canvas canvas;
 
-    private int[] pCoord = {0, 0};
-    private int[] imCoord = {2, 2};
-    private int[] eCoord = {4, 4};
-    private int score = 0;
+  private List<icon> icons;
+  private Boolean mouseHeld = false;
+  private double mouseX = -1;
+    private double mouseY = -1;
+
+  enum Direction {
+    UP,
+    DOWN,
+    LEFT,
+    RIGHT
+  }
+
+  public class icon {
+    public Circle circle;
+    public int x;
+    public int y;
+    public Direction dir1;
+    public Direction dir2;
+
+    public icon(int x, int y) {
+      circle = new Circle(3, Color.color(Math.random(), Math.random(), Math.random()));
+      this.x = x;
+      this.y = y;
+      dir1 = Direction.values()[(int) (Math.random() * 4)];
+        dir2 = Direction.values()[(int) (Math.random() * 4)];
+    }
+  }
+
+  @FXML
+  private void initialize() {
+    icons = new ArrayList<>();
+    icons.add(new icon(50, 50));
+    icons.add(new icon(100, 100));
+  }
+
+  @FXML
+  private void onMousePressed(MouseEvent event) {
+    mouseHeld = true;
+    mouseX = event.getX();
+    mouseY = event.getY();
+  }
 
     @FXML
-    private void initialize() {
-        // Place the player at the starting position
-        GridPane.setRowIndex(iconPlayer, pCoord[0]);
-        GridPane.setColumnIndex(iconPlayer, pCoord[1]);
+    private void onMouseReleased(MouseEvent event) {
+    mouseHeld = false;
+    mouseX = -1;
+    mouseY = -1;
+  }
+
+  @FXML
+private void onMouseDragged(MouseEvent event) {
+    if (mouseHeld) {
+        mouseX = event.getX();
+        mouseY = event.getY();
     }
+}
 
-    @FXML
-    private void onKeyPressed(KeyEvent event) {
-        // Handle key press events
-        switch (event.getCode()) {
-            case W:
-                if (pCoord[0] > 0) pCoord[0]--;
-                break;
-            case S:
-                if (pCoord[0] < 5) {
-                    pCoord[0]++;
-                }
-                break;
-            case A:
-                if (pCoord[1] > 0) {
-                    pCoord[1]--;
-                }
-                break;
-            case D:
-                if (pCoord[1] < 5) {
-                    pCoord[1]++;
-                }
-                break;
-            default:
-                break;
-        }
+  public void onEnter() {
+    App.startTimeline(10);
+    draw();
+  }
 
-        if (playerOnEnemy()) {
-            System.out.println("You encountered an enemy!");
-            score = 0;
-            pCoord[0] = GridPane.getRowIndex(iconPlayer);
-            pCoord[1] = GridPane.getColumnIndex(iconPlayer);
-            return;
-        }
-        // Move the player icon
-        GridPane.setRowIndex(iconPlayer, pCoord[0]);
-        GridPane.setColumnIndex(iconPlayer, pCoord[1]);
+  public void onExit() {
+    App.stopTimeline();
+  }
 
-        // check if Apple
-        if (playerOnItem()) {
-            System.out.println("You found an apple!");
-            // Move the apple to a new random position
-            moveItemRandomly();
-            increaseScore();
-        }
-
-        moveEnemy();
-
-        if (playerOnEnemy()) {
-            System.out.println("You encountered an enemy!");
-            score = 0;
-            eCoord[0] = GridPane.getRowIndex(iconEnemy);
-            eCoord[1] = GridPane.getColumnIndex(iconEnemy);
-            return;
-        }
-
-        // Update enemy position
-        GridPane.setRowIndex(iconEnemy, eCoord[0]);
-        GridPane.setColumnIndex(iconEnemy, eCoord[1]);
+  public void pulse() {
+    if (mouseHeld) {
+      icons.add(new icon((int) (mouseX), (int) (mouseY)));
     }
+    moveIcons();
+    draw();
+  }
 
-    private void moveEnemy() {
-        // Simple AI: Move towards the player
-        double logic = Math.random();
-        if (logic < .25) {
-            if (eCoord[0] < pCoord[0]) eCoord[0]++;
-            else if (eCoord[0] > pCoord[0]) eCoord[0]--;
-        } else if (logic < .5) {
-            if (eCoord[1] < pCoord[1]) eCoord[1]++;
-            else if (eCoord[1] > pCoord[1]) eCoord[1]--;
-        } else if (logic < .75) {
-            if (eCoord[0] < 3) eCoord[0]++;
-            else eCoord[0]--;
-        } else {
-            if (eCoord[1] < 3) eCoord[1]++;
-            else eCoord[1]--;
-        }
+  private void moveIcons() {
+    for (icon ic : icons) {
+      switch (ic.dir1) {
+        case UP:
+          ic.y -= 5;
+          if (ic.y < 0) {
+            ic.dir1 = Direction.DOWN;
+          }
+          break;
+        case DOWN:
+          ic.y += 5;
+          if (ic.y > canvas.getHeight()) {
+            ic.dir1 = Direction.UP;
+          }
+          break;
+        case LEFT:
+          ic.x -= 5;
+          if (ic.x < 0) {
+            ic.dir1 = Direction.RIGHT;
+          }
+          break;
+        case RIGHT:
+          ic.x += 5;
+          if (ic.x > canvas.getWidth()) {
+            ic.dir1 = Direction.LEFT;
+          }
+          break;
+        default:
+          ic.dir1 = Direction.values()[(int) (Math.random() * 4)];
+          break;
+      }
     }
+    for (icon ic : icons) {
+      switch (ic.dir2) {
+        case UP:
+          ic.y -= 5;
+          if (ic.y < 0) {
+            ic.dir2 = Direction.DOWN;
+          }
+          break;
+        case DOWN:
+          ic.y += 5;
+          if (ic.y > canvas.getHeight()) {
+            ic.dir2 = Direction.UP;
+          }
+          break;
+        case LEFT:
+          ic.x -= 5;
+          if (ic.x < 0) {
+            ic.dir2 = Direction.RIGHT;
+          }
+          break;
+        case RIGHT:
+          ic.x += 5;
+          if (ic.x > canvas.getWidth()) {
+            ic.dir2 = Direction.LEFT;
+          }
+          break;
+        default:
+          ic.dir2 = Direction.values()[(int) (Math.random() * 4)];
+          break;
+      }
+    }
+  }
 
-    private boolean playerOnItem() {
-        return pCoord[0] == imCoord[0] && pCoord[1] == imCoord[1];
+  private void draw() {
+    var gc = canvas.getGraphicsContext2D();
+    gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
+    for (icon ic : icons) {
+      gc.setFill(ic.circle.getFill());
+      gc.fillOval(ic.x, ic.y, ic.circle.getRadius() * 2, ic.circle.getRadius() * 2);
     }
-
-    private boolean playerOnEnemy() {
-        return pCoord[0] == eCoord[0] && pCoord[1] == eCoord[1];
-    }
-
-    private void moveItemRandomly() {
-        imCoord[0] = (int) (Math.random() * 5);
-        imCoord[1] = (int) (Math.random() * 5);
-        if (playerOnItem()) {
-            moveItemRandomly();
-            return;
-        }
-        GridPane.setRowIndex(imageApple, imCoord[0]);
-        GridPane.setColumnIndex(imageApple, imCoord[1]);
-    }
-
-    private void increaseScore() {
-        // Logic to increase the player's score
-        score++;
-        System.out.println("Score increased! Current score: " + score);
-    }
-
-    public void restartGame() {
-        // Logic to restart the game
-        score = 0;
-        pCoord = new int[]{0, 0};
-        eCoord = new int[]{4, 4};
-        imCoord = new int[]{2, 2};
-        GridPane.setRowIndex(imageApple, imCoord[0]);
-        GridPane.setColumnIndex(imageApple, imCoord[1]);
-        GridPane.setRowIndex(iconEnemy, eCoord[0]);
-        GridPane.setColumnIndex(iconEnemy, eCoord[1]);
-        GridPane.setRowIndex(iconPlayer, pCoord[0]);
-        GridPane.setColumnIndex(iconPlayer, pCoord[1]);
-    }
-
-    @FXML
-    private void menu(ActionEvent event) throws IOException {
-    Button btn = (Button) event.getSource();
-    Scene scene = btn.getScene();
-    App.openScene(scene, "mainmenu");
-    }
-
-    @FXML
-    private void exit() {
-        // Logic to exit the application
-        System.out.println("Exit clicked");
-        System.exit(0);
-    }
+  }
 }

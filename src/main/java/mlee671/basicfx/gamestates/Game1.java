@@ -14,12 +14,12 @@ public class Game1 implements GameState {
 
   @Override
   public void enter() {
-    controller.restartGame();
+    controller.onEnter();
   }
 
   @Override
   public void exit() {
-    // Logic for exiting the game 1 state
+    controller.onExit();
   }
 
   @Override
@@ -34,6 +34,6 @@ public class Game1 implements GameState {
 
   @Override
   public void update() {
-    // Logic for updating the game 1 state
+    controller.pulse();
   }
 }
