@@ -30,15 +30,15 @@ public class Game1Controller {
     public Circle circle;
     public int x;
     public int y;
-    public Direction dir1;
-    public Direction dir2;
+    public int velocityX;
+    public int velocityY;
 
     public icon(int x, int y) {
       circle = new Circle(3, Color.color(Math.random(), Math.random(), Math.random()));
       this.x = x;
       this.y = y;
-      dir1 = Direction.values()[(int) (Math.random() * 4)];
-        dir2 = Direction.values()[(int) (Math.random() * 4)];
+      velocityX = (int) (Math.random() * 4);
+      velocityY = (int) (Math.random() * 4);
     }
   }
 
@@ -90,65 +90,16 @@ private void onMouseDragged(MouseEvent event) {
 
   private void moveIcons() {
     for (icon ic : icons) {
-      switch (ic.dir1) {
-        case UP:
-          ic.y -= 5;
-          if (ic.y < 0) {
-            ic.dir1 = Direction.DOWN;
-          }
-          break;
-        case DOWN:
-          ic.y += 5;
-          if (ic.y > canvas.getHeight()) {
-            ic.dir1 = Direction.UP;
-          }
-          break;
-        case LEFT:
-          ic.x -= 5;
-          if (ic.x < 0) {
-            ic.dir1 = Direction.RIGHT;
-          }
-          break;
-        case RIGHT:
-          ic.x += 5;
-          if (ic.x > canvas.getWidth()) {
-            ic.dir1 = Direction.LEFT;
-          }
-          break;
-        default:
-          ic.dir1 = Direction.values()[(int) (Math.random() * 4)];
-          break;
+      ic.x += ic.velocityX;
+      ic.y += ic.velocityY;
+      ic.velocityY += 1; // simulate gravity
+      // Bounce off walls
+      if (ic.x < 0 || ic.x > canvas.getWidth()) {
+        ic.velocityX = -ic.velocityX;
       }
-    }
-    for (icon ic : icons) {
-      switch (ic.dir2) {
-        case UP:
-          ic.y -= 5;
-          if (ic.y < 0) {
-            ic.dir2 = Direction.DOWN;
-          }
-          break;
-        case DOWN:
-          ic.y += 5;
-          if (ic.y > canvas.getHeight()) {
-            ic.dir2 = Direction.UP;
-          }
-          break;
-        case LEFT:
-          ic.x -= 5;
-          if (ic.x < 0) {
-            ic.dir2 = Direction.RIGHT;
-          }
-          break;
-        case RIGHT:
-          ic.x += 5;
-          if (ic.x > canvas.getWidth()) {
-            ic.dir2 = Direction.LEFT;
-          }
-          break;
-        default:
-          ic.dir2 = Direction.values()[(int) (Math.random() * 4)];
-          break;
+      if (ic.y < 0 || ic.y > canvas.getHeight()) {
+        ic.velocityY = -ic.velocityY;
+        ic.velocityY += 1;
       }
     }
   }
